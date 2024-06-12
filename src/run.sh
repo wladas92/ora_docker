@@ -1,0 +1,1 @@
+sh /home/oracle/test.sh > /home/oracle/test.log

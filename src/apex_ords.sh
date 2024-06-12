@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Pass pluggable database name as parameter
+# Pass PDB name as parameter
 echo "### INSTALLING APEX, PDB: $1 ###"
 
 # Start the timer

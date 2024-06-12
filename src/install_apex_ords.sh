@@ -63,10 +63,9 @@ EOF
 sqlplus / as sysdba <<EOF
 ALTER SESSION SET CONTAINER = $PDB_NAME;
 @apex_rest_config.sql
-EXIT; <<EOT
 E
 E
-EOT
+EXIT;
 EOF
 
 # Set Accounts

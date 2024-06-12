@@ -16,7 +16,7 @@ cd apex
 sqlplus / as sysdba <<EOF
 ALTER SESSION SET CONTAINER = $PDB_NAME;
 @apex_rest_config.sql
+E
+E
 EXIT;
-E
-E
 EOF

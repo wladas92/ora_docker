@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Pass PDB name as parameter
-echo "### INSTALLING APEX, PDB: $1 ###"
+# Constant PDB_NAME - valid for 23cfree, 23aifree
+readonly PDB_NAME="FREEPDB1"
 
 # Start the timer
 start_time=$(date +%s)
@@ -16,7 +16,7 @@ cd apex
 
 # Create APEX Profile
 sqlplus / as sysdba <<EOF
-ALTER SESSION SET CONTAINER = $1;
+ALTER SESSION SET CONTAINER = $PDB_NAME;
 alter session set "_oracle_script"=true;
 
 create profile APEX limit
@@ -41,7 +41,7 @@ EOF
 
 # Create APEX Tablespace
 sqlplus / as sysdba <<EOF
-ALTER SESSION SET CONTAINER = $1;
+ALTER SESSION SET CONTAINER = $PDB_NAME;
 create tablespace APEX
   logging
   datafile 'APEX_01.DBF'
@@ -54,21 +54,21 @@ EOF
 
 # Install APEX
 sqlplus / as sysdba <<EOF
-ALTER SESSION SET CONTAINER = $1;
+ALTER SESSION SET CONTAINER = $PDB_NAME;
 @apexins.sql APEX APEX TEMP /i/
 EXIT;
 EOF
 
 # Configuring REST
 sqlplus / as sysdba <<EOF
-ALTER SESSION SET CONTAINER = $1;
+ALTER SESSION SET CONTAINER = $PDB_NAME;
 @apex_rest_config.sql
 EXIT;
 EOF
 
 # Set Accounts
 sqlplus / as sysdba <<EOF
-ALTER SESSION SET CONTAINER = $1;
+ALTER SESSION SET CONTAINER = $PDB_NAME;
 ALTER USER APEX_PUBLIC_USER ACCOUNT UNLOCK;
 ALTER USER APEX_PUBLIC_USER IDENTIFIED BY E;
 ALTER USER APEX_PUBLIC_USER profile APEX;
@@ -79,7 +79,7 @@ EOF
 
 # Create ADMIN Account silently
 sqlplus / as sysdba <<EOF
-ALTER SESSION SET CONTAINER = $1;
+ALTER SESSION SET CONTAINER = $PDB_NAME;
 BEGIN
   APEX_UTIL.set_security_group_id( 10 );
   
@@ -143,7 +143,7 @@ EOF
 su - <<EOF
 export ORDS_CONFIG=/etc/ords/config
 export DB_PORT=1521
-export DB_SERVICE=$1
+export DB_SERVICE=$PDB_NAME
 export SYSDBA_USER=SYS
 
 ords --config \${ORDS_CONFIG} install \
@@ -211,7 +211,7 @@ EOF
 
 # Delete Startup file
 su - <<EOF
-rm /opt/oracle/scripts/startup/00_start_apex_ords_installer.sh
+rm /opt/oracle/scripts/startup/00_start_apex_ords.sh
 EOF
 
 # Calculate the elapsed time

@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Constant PDB_NAME - valid for 23cfree, 23aifree
-readonly PDB_NAME="FREEPDB1"
+readonly PDB_NAME=FREEPDB1
+
+# Constant DATAFILE_DIR
+readonly DATAFILE_DIR=/opt/oracle/oradata/FREE/$PDB_NAME
 
 # Start the timer
 start_time=$(date +%s)
@@ -44,7 +47,7 @@ sqlplus / as sysdba <<EOF
 ALTER SESSION SET CONTAINER = $PDB_NAME;
 create tablespace APEX
   logging
-  datafile 'APEX_01.DBF'
+  datafile '$DATAFILE_DIR/APEX_01.DBF'
   size 512M reuse
   autoextend on
   next 128M MAXSIZE 2G

@@ -27,4 +27,4 @@ docker cp 00_start_apex_ords.sh container_name:/opt/oracle/scripts/startup
 docker start container_name
 ```
 
-When all is allright, APEX should be availible on [http://localhost:8023/ords/apex](http://localhost:8023/ords/apex).
+When all is allright, APEX should be availible on [http://localhost:8080/ords/apex](http://localhost:8080/ords/apex).

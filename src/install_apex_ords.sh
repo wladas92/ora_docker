@@ -139,10 +139,10 @@ yum-config-manager --add-repo=https://yum.oracle.com/repo/OracleLinux/OL8/oracle
 dnf install ords -y
 EOF
 
-# # Set ORDS-HOME before config (do I really need this)?
-# su - <<EOF
-# export ORDS_HOME=/usr/local/bin/ords
-# EOF
+# Set ORDS-HOME before config (do I really need this)?
+su - <<EOF
+export ORDS_HOME=/usr/local/bin/ords
+EOF
 
 # Configure ORDS
 su - <<EOF
